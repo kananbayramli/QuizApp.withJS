@@ -6,19 +6,41 @@ function Question(questionText, answerChoice, correctAnswer)
     
 }
 
-//Prototypeda bunu yazmaqla biz bir metodu bir yerde yazmagla isdediyimiz her yerde onu isdifade ede bilerik.Artig bu obyekte xas bir metot olmayacag
 Question.prototype.checkAnswer = function(answer){
     return answer == this.answerChoice
 }
 
-
-
-let question1 = new Question(".NET necenci ilde yaradilib?", {a:"2000", b:"1999", c:"2001"}, "c");
-let question2 = new Question("Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a");
-
 let questions = [
-    new Question("Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a"),
-    new Question("Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a"),
-    new Question("Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a")
+    new Question("1-Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a"),
+    new Question("2-Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a"),
+    new Question("3-Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a"),
+    new Question("4-Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a"),
 ];
+
+
+ function Quiz(questions)
+ {
+    this.questions = questions;
+    this.questionIndex = 0;
+ }
+
+ Quiz.prototype.getQuestion = function(){
+    return this.questions[this.questionIndex];
+ }
+
+ const quiz = new Quiz(questions);
+
+
+document.querySelector(".btn-start").addEventListener("click", function(){
+    if(quiz.questions.length != quiz.questionIndex){
+        console.log(quiz.getQuestion());
+        quiz.questionIndex += 1;
+    }else{
+        console.log("Suallar bitti!");
+    }
+
+});
+
+
+
 
