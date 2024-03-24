@@ -32,14 +32,40 @@ let questions = [
 
 
 document.querySelector(".btn_start").addEventListener("click", function(){
-    if(quiz.questions.length != quiz.questionIndex){
-        document.querySelector(".quiz_box").classList.add("active");
-        console.log(quiz.getQuestion());
+    document.querySelector(".quiz_box").classList.add("active");
+    showQuestion( quiz.getQuestion());
+});
+
+
+document.querySelector(".next_btn").addEventListener("click", function(){
+    if(quiz.questions.length != quiz.questionIndex + 1){
         quiz.questionIndex += 1;
+        showQuestion( quiz.getQuestion());
     }else{
         console.log("Suallar bitti!");
     }
 });
+
+
+function showQuestion(sual){
+    let question = `<span>${sual.questionText}</span>`;
+    let options = '';
+
+    for(let cavab in sual.answerChoice)
+    {
+        options += 
+        `
+            <div class="option">
+                <span><b>${cavab}</b>: ${sual.answerChoice[cavab]}</span>
+            </div>
+        `
+    }
+
+    document.querySelector(".question_text").innerHTML = question;
+    document.querySelector(".option_list").innerHTML = options;
+}
+
+
 
 
 
