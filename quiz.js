@@ -2,6 +2,7 @@ function Quiz(questions)
 {
    this.questions = questions;
    this.questionIndex = 0;
+   this.correctAnswerCount = 0;
 }
 
 Quiz.prototype.getQuestion = function(){

@@ -4,19 +4,35 @@
 ui.btn_start.addEventListener("click", function(){
     ui.quiz_box.classList.add("active");
     ui.showQuestion( quiz.getQuestion());
-    questionNumber(quiz.questionIndex +1, quiz.questions.length);
+    ui.questionNumber(quiz.questionIndex +1, quiz.questions.length);
     ui.next_btn.classList.remove("show");
 });
+
 
 ui.next_btn.addEventListener("click", function(){
     if(quiz.questions.length != quiz.questionIndex + 1){
         quiz.questionIndex += 1;
         ui.showQuestion( quiz.getQuestion());
-        questionNumber(quiz.questionIndex +1, quiz.questions.length);
+        ui.questionNumber(quiz.questionIndex +1, quiz.questions.length);
         ui.next_btn.classList.remove("show");
     }else{
-        console.log("Suallar bitti!");
+        ui.quiz_box.classList.remove("active");
+        ui.score_box.classList.add("active");   
+        ui.showScore(quiz.questions.length, quiz.correctAnswerCount);     
     }
+});
+
+
+
+ui.btn_quit.addEventListener("click", function(){
+    window.location.reload();                       //sehifeni refresh edir
+});
+
+ui.btn_replay.addEventListener("click", function(){
+    quiz.questionIndex = 0;
+    quiz.correctAnswerCount = 0;
+    ui.btn_start.click();
+    ui.score_box.classList.remove("active");
 });
 
 
@@ -25,6 +41,7 @@ function optionSelected(option)    //bu option bizim kliklediyimiz optionu getir
     let answer = option.querySelector("span b").textContent;  //variantlari getirir
     let question = quiz.getQuestion();
     if(question.checkAnswer(answer)){
+        quiz.correctAnswerCount += 1;
         option.classList.add("correct");
         option.insertAdjacentHTML("beforeend", ui.correctIcon);
     }else{
@@ -38,17 +55,4 @@ function optionSelected(option)    //bu option bizim kliklediyimiz optionu getir
     }
     ui.next_btn.classList.add("show");
 }
-
-
-function questionNumber(sualSira, toplamSual)
-{
-    let tag = `<span class="badge bg-warning">${sualSira}/${toplamSual}</span>`;
-    document.querySelector(".quiz_box .question_index").innerHTML = tag;
-}
-
-
-
-
-
-
 
