@@ -3,6 +3,7 @@
 
 ui.btn_start.addEventListener("click", function(){
     ui.quiz_box.classList.add("active");
+    startTimer(10);
     ui.showQuestion( quiz.getQuestion());
     ui.questionNumber(quiz.questionIndex +1, quiz.questions.length);
     ui.next_btn.classList.remove("show");
@@ -12,10 +13,13 @@ ui.btn_start.addEventListener("click", function(){
 ui.next_btn.addEventListener("click", function(){
     if(quiz.questions.length != quiz.questionIndex + 1){
         quiz.questionIndex += 1;
+        clearInterval(counter);
+        startTimer(10);
         ui.showQuestion( quiz.getQuestion());
         ui.questionNumber(quiz.questionIndex +1, quiz.questions.length);
         ui.next_btn.classList.remove("show");
     }else{
+        clearInterval(counter);
         ui.quiz_box.classList.remove("active");
         ui.score_box.classList.add("active");   
         ui.showScore(quiz.questions.length, quiz.correctAnswerCount);     
@@ -38,8 +42,10 @@ ui.btn_replay.addEventListener("click", function(){
 
 function optionSelected(option)    //bu option bizim kliklediyimiz optionu getirecek
 {
+    clearInterval(counter);
     let answer = option.querySelector("span b").textContent;  //variantlari getirir
     let question = quiz.getQuestion();
+
     if(question.checkAnswer(answer)){
         quiz.correctAnswerCount += 1;
         option.classList.add("correct");
@@ -56,3 +62,30 @@ function optionSelected(option)    //bu option bizim kliklediyimiz optionu getir
     ui.next_btn.classList.add("show");
 }
 
+
+
+let counter;
+function startTimer(time){
+    counter = setInterval(timer, 1000);
+
+    function timer(){
+       ui.time_second.textContent = time;
+       time--;
+
+       if(time < 0){
+          clearInterval(counter);
+          ui.time_text.textContent = "Time out";
+
+          let cavab = quiz.getQuestion().correctAnswer;
+
+          for(let option of ui.option_list.children){
+            if(option.querySelector("span b").textContent == cavab){
+                option.classList.add("correct");
+                option.insertAdjacentHTML("beforeend", ui.correctIcon);
+            }
+            option.classList.add("disabled");
+          }
+          ui.next_btn.classList.add("show");
+       }
+    }
+}

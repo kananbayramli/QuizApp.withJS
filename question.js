@@ -11,8 +11,8 @@ Question.prototype.checkAnswer = function(answer){
 }
 
 let questions = [
-    new Question("1-Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a"),
-    new Question("2-Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a"),
-    new Question("3-Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a"),
-    new Question("4-Javascript ne zaman yaradilib?", {a:"2000", b:"1999", c:"2001"}, "a"),
+    new Question("1-Javascript dilini istifade etmir?", {a:"React", b:"Angular", c:"Asp Net"}, "c"),
+    new Question("2-Frontent terefinde deyil?", {a:"Css", b:"Html", c:"Sql"}, "c"),
+    new Question("3-Javascript paketi hansidir?", {a:"Node.js", b:"Npm", c:"Nuget"}, "b"),
+    new Question("4-Backend terefinde deyerlenir?", {a:"node.js", b:"vue.js", c:"typescript"}, "a"),
 ];
