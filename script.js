@@ -4,6 +4,7 @@
 ui.btn_start.addEventListener("click", function(){
     ui.quiz_box.classList.add("active");
     startTimer(10);
+    startTimerLine();
     ui.showQuestion( quiz.getQuestion());
     ui.questionNumber(quiz.questionIndex +1, quiz.questions.length);
     ui.next_btn.classList.remove("show");
@@ -14,12 +15,15 @@ ui.next_btn.addEventListener("click", function(){
     if(quiz.questions.length != quiz.questionIndex + 1){
         quiz.questionIndex += 1;
         clearInterval(counter);
+        clearInterval(counter_line);
         startTimer(10);
+        startTimerLine();
         ui.showQuestion( quiz.getQuestion());
         ui.questionNumber(quiz.questionIndex +1, quiz.questions.length);
         ui.next_btn.classList.remove("show");
     }else{
         clearInterval(counter);
+        clearInterval(counter_line);
         ui.quiz_box.classList.remove("active");
         ui.score_box.classList.add("active");   
         ui.showScore(quiz.questions.length, quiz.correctAnswerCount);     
@@ -43,6 +47,7 @@ ui.btn_replay.addEventListener("click", function(){
 function optionSelected(option)    //bu option bizim kliklediyimiz optionu getirecek
 {
     clearInterval(counter);
+    clearInterval(counter_line);
     let answer = option.querySelector("span b").textContent;  //variantlari getirir
     let question = quiz.getQuestion();
 
@@ -87,5 +92,21 @@ function startTimer(time){
           }
           ui.next_btn.classList.add("show");
        }
+    }
+}
+
+let counter_line;
+function startTimerLine(){
+    let line_width = 0;
+
+    counter_line = setInterval(timer, 20);
+
+    function timer (){
+        line_width += 1;
+        ui.time_line.style.width = line_width + "px";
+
+        if(line_width > 549){
+            clearInterval(counter_line);
+        }
     }
 }
